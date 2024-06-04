@@ -47,4 +47,16 @@ export class BookingsService {
       })
       .getMany();
   }
+
+  async cancelBooking(bookingId: string): Promise<void> {
+    const booking = await this.bookingsRepository.findOne({
+      where: { id: bookingId },
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    booking.status = 'cancelled';
+    await this.bookingsRepository.save(booking);
+  }
 }

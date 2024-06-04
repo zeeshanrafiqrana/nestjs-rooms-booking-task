@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Patch } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { Booking } from './entities/booking.entity';
 
@@ -33,5 +33,10 @@ export class BookingsController {
       );
     }
     return this.bookingsService.searchBookings(parsedDateRange);
+  }
+
+  @Patch('cancel')
+  async cancelBooking(@Body('bookingId') bookingId: string): Promise<void> {
+    return this.bookingsService.cancelBooking(bookingId);
   }
 }
